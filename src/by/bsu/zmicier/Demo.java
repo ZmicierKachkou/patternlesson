@@ -1,5 +1,9 @@
 package by.bsu.zmicier;
 
+import by.bsu.zmicier.actions.DoNothingAction;
+import by.bsu.zmicier.actions.DuplicateStringAction;
+import by.bsu.zmicier.actions.ReverseStringAction;
+import by.bsu.zmicier.actions.StringAction;
 import java.util.Scanner;
 
 public class Demo {
@@ -9,21 +13,16 @@ public class Demo {
             String input = scanner.nextLine();
             String command = scanner.nextLine();
 
-            String result;
+            StringAction action;
             if ("duplicate".equals(command)) {
-                result = input + input;
+                action = new DuplicateStringAction();
             } else if ("reverse".equals(command)) {
-                char[] inputArray = input.toCharArray();
-                char[] resultArray = new char[inputArray.length];
-                for (int i = 0; i < inputArray.length; i++) {
-                    resultArray[i] = inputArray[inputArray.length - i - 1];
-                }
-                result = new String(resultArray);
+                action = new ReverseStringAction();
             } else {
-                result = input;
+                action = new DoNothingAction();
             }
 
-            System.out.println(result);
+            System.out.println(action.doAction(input));
         }
     }
 }
