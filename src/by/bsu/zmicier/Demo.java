@@ -1,18 +1,22 @@
 package by.bsu.zmicier;
 
-import by.bsu.zmicier.actions.DuplicateStringAction;
-import by.bsu.zmicier.actions.ReverseStringAction;
+import by.bsu.zmicier.listeners.InvokeRequestListener;
+import by.bsu.zmicier.listeners.LogRequestListener;
+import by.bsu.zmicier.listeners.SecurityListener;
+import by.bsu.zmicier.listeners.StringRequestListener;
 import by.bsu.zmicier.request.StringActionRequest;
 import by.bsu.zmicier.request.StringActionRequestBuilder;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 import java.util.Scanner;
 
 public class Demo {
     public static void main(String[] args) {
-        Registry.getInstance().register("duplicate", new DuplicateStringAction());
-        Registry.getInstance().register("reverse", new ReverseStringAction());
+        List<StringRequestListener> listeners = new ArrayList<>();
+        listeners.add(new SecurityListener());
+        listeners.add(new LogRequestListener());
+        listeners.add(new InvokeRequestListener());
 
         StringActionRequestBuilder builder = new StringActionRequestBuilder()
                 .setAdditionalParam("creationDate", new Date().toString())
@@ -26,8 +30,9 @@ public class Demo {
                     .setRequestAction(scanner.nextLine())
                     .build();
 
-            System.out.println(Registry.getInstance().getAction(request.getRequestAction())
-                    .doAction(request.getRequestValue()));
+            for (StringRequestListener listener : listeners) {
+                listener.onRequest(request);
+            }
         }
     }
 }
