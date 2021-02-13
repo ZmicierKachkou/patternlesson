@@ -1,5 +1,6 @@
 package by.bsu.zmicier;
 
+import by.bsu.zmicier.listeners.CoolRequestListenerAdapter;
 import by.bsu.zmicier.listeners.InvokeRequestListener;
 import by.bsu.zmicier.listeners.LogRequestListener;
 import by.bsu.zmicier.listeners.SecurityListener;
@@ -16,6 +17,7 @@ public class Demo {
         List<StringRequestListener> listeners = new ArrayList<>();
         listeners.add(new SecurityListener());
         listeners.add(new LogRequestListener());
+        listeners.add(new CoolRequestListenerAdapter());
         listeners.add(new InvokeRequestListener());
 
         StringActionRequestBuilder builder = new StringActionRequestBuilder()
