@@ -5,8 +5,11 @@ import by.bsu.zmicier.actions.CurlyBracketsActionDecorator;
 import by.bsu.zmicier.actions.DoNothingAction;
 import by.bsu.zmicier.actions.DuplicateStringAction;
 import by.bsu.zmicier.actions.ReverseStringAction;
+import by.bsu.zmicier.actions.SortCharsAction;
 import by.bsu.zmicier.actions.SquareBracketsActionDecorator;
 import by.bsu.zmicier.request.StringActionRequest;
+import by.bsu.zmicier.sorting.MergeSortStrategy;
+import by.bsu.zmicier.sorting.QuickSortStrategy;
 
 public class InvokeRequestListener implements StringRequestListener {
     static {
@@ -20,6 +23,10 @@ public class InvokeRequestListener implements StringRequestListener {
                                 new DoNothingAction()
                         )
                 ));
+        Registry.getInstance().register("quicksort",
+                new SortCharsAction(new QuickSortStrategy()));
+        Registry.getInstance().register("mergesort",
+                new SortCharsAction(new MergeSortStrategy()));
     }
 
     @Override
