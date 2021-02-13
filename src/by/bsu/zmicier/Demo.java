@@ -1,5 +1,6 @@
 package by.bsu.zmicier;
 
+import by.bsu.zmicier.iterator.ConsoleIterable;
 import by.bsu.zmicier.listeners.CompositeListener;
 import by.bsu.zmicier.listeners.CoolRequestListenerAdapter;
 import by.bsu.zmicier.listeners.InvokeRequestListener;
@@ -7,11 +8,8 @@ import by.bsu.zmicier.listeners.LogRequestListener;
 import by.bsu.zmicier.listeners.SecurityListener;
 import by.bsu.zmicier.listeners.StringRequestListener;
 import by.bsu.zmicier.request.StringActionRequest;
-import by.bsu.zmicier.request.StringActionRequestBuilder;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Scanner;
 
 public class Demo {
     public static void main(String[] args) {
@@ -24,18 +22,9 @@ public class Demo {
                 .add(new InvokeRequestListener());
         listeners.add(consoleBasedListener);
 
-        StringActionRequestBuilder builder = new StringActionRequestBuilder()
-                .setAdditionalParam("creationDate", new Date().toString())
-                .setAdditionalParam("javaVersion", System.getProperty("java.version"));
-
-        Scanner scanner = new Scanner(System.in);
-
-        while (true) {
-            StringActionRequest request = builder
-                    .setRequestValue(scanner.nextLine())
-                    .setRequestAction(scanner.nextLine())
-                    .build();
-
+        ConsoleIterable consoleReader = new ConsoleIterable();
+        // for each !
+        for (StringActionRequest request : consoleReader) {
             for (StringRequestListener listener : listeners) {
                 listener.onRequest(request);
             }
