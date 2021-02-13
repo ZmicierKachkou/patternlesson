@@ -1,0 +1,5 @@
+.gitignore
+.idea/
+out/
+src/by/bsu/zmicier/PatternExample.java
+patterns.iml
