@@ -1,5 +1,6 @@
 package by.bsu.zmicier;
 
+import by.bsu.zmicier.listeners.CompositeListener;
 import by.bsu.zmicier.listeners.CoolRequestListenerAdapter;
 import by.bsu.zmicier.listeners.InvokeRequestListener;
 import by.bsu.zmicier.listeners.LogRequestListener;
@@ -16,9 +17,12 @@ public class Demo {
     public static void main(String[] args) {
         List<StringRequestListener> listeners = new ArrayList<>();
         listeners.add(new SecurityListener());
-        listeners.add(new LogRequestListener());
         listeners.add(new CoolRequestListenerAdapter());
-        listeners.add(new InvokeRequestListener());
+
+        CompositeListener consoleBasedListener = new CompositeListener()
+                .add(new LogRequestListener())
+                .add(new InvokeRequestListener());
+        listeners.add(consoleBasedListener);
 
         StringActionRequestBuilder builder = new StringActionRequestBuilder()
                 .setAdditionalParam("creationDate", new Date().toString())
